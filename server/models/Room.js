@@ -6,10 +6,10 @@ const roomSchema = mongoose.Schema({
         unique: true,
         require: true
     },
-    // directed: {
-    //     type: Boolean,
-    //     default: false
-    // }
+    directed: {
+        type: Boolean,
+        default: false
+    }
 });
 
 module.exports = mongoose.model("Room", roomSchema);
