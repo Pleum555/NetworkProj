@@ -29,9 +29,25 @@ let users = []
 let chatrooms = []
 
 socketIO.on('connection', (socket) => {
-    console.log(`🚀: ${socket.id} user just connected!`)  
+    console.log(`🚀: ${socket.id} user just connected!`)
+
+    socket.on("joinroom", data => {
+      socket.leave(data.oldchatname)
+      socket.join(data.chatname)
+      // Add this
+    // Send message to all users currently in the room, apart from the user that just joined
+    socketIO.to(data.chatname).emit('messageResponse', {
+      chatname: data.chatname,
+      text: "someone has joined the chat room", 
+      name: "chatbot", 
+      id: `${socket.id}${Math.random()}`,
+      socketID: socket.id
+    });
+    })
+
     socket.on("message", data => {
-      socketIO.emit("messageResponse", data)
+      socketIO.to(data.chatname).emit("messageResponse", data)
+      
     })
 
     socket.on("typing", data => (
