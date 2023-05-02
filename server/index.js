@@ -1,5 +1,7 @@
 const express = require("express")
 const app = express()
+const dotenv = require('dotenv');
+const connectDB = require("./config/db");
 const cors = require("cors")
 const http = require('http').Server(app);
 const PORT = 4000
@@ -9,7 +11,20 @@ const socketIO = require('socket.io')(http, {
     }
 });
 
+//Route files
+const rooms = require('./routes/room');
+
+//Load env vars
+dotenv.config({path:'./config/config.env'});
+
+//Connect to database
+connectDB();
+
 app.use(cors())
+
+//Mount routers
+app.use('/api/v1/rooms', rooms);
+
 let users = []
 
 socketIO.on('connection', (socket) => {
