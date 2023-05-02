@@ -1,6 +1,4 @@
 const Room = require("../models/Room");
-// const filter = require("../utils/leave-room");
-// const mongoose = require("mongoose");
 
 //GET ROOMS
 const getallUndirectedRooms = async(req, res) => {

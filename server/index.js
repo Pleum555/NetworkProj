@@ -13,6 +13,7 @@ const socketIO = require('socket.io')(http, {
 
 //Route files
 const rooms = require('./routes/room');
+const directrooms = require('./routes/directroom');
 
 //Load env vars
 dotenv.config({path:'./config/config.env'});
@@ -24,6 +25,7 @@ app.use(cors())
 
 //Mount routers
 app.use('/api/v1/rooms', rooms);
+app.use('/api/v1/directrooms', directrooms);
 
 let users = []
 let chatrooms = []
