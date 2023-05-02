@@ -19,13 +19,14 @@ dotenv.config({path:'./config/config.env'});
 
 //Connect to database
 connectDB();
-
+app.use(express.json());
 app.use(cors())
 
 //Mount routers
 app.use('/api/v1/rooms', rooms);
 
 let users = []
+let chatrooms = []
 
 socketIO.on('connection', (socket) => {
     console.log(`🚀: ${socket.id} user just connected!`)  
