@@ -8,6 +8,7 @@ const ChatBar = ({socket}) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [users, setUsers] = useState([])
+    const [allRoom, setAllRoom] = useState([]);
     useEffect(()=> {
         socket.on("newUserResponse", data => setUsers(data))
     }, [socket, users])
@@ -37,28 +38,24 @@ const ChatBar = ({socket}) => {
         }
     }
 
-    const newchatroom = async (e) => {
-        const data = {
-            name: "new6"
-        };
-        
-        const response = await fetch(room_path, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-    
-        const result = await response.json()
-        if(!response.ok){
-            console.log(result.error);
-            alert(result.error);
+
+    useEffect(() => {
+        const getRoom =async () =>{
+            const respone = await fetch(room_path, { 
+                method: "GET"
+            });
+            const result = await respone.json();
+            if (!respone.ok) {
+                alert(result.error);
+            } else {
+                setAllRoom(result)
+                console.log(result)
+            }
         }
-        else{
-            console.log(result)
-        }
-    }
+        getRoom();
+        console.log("all rooms: "+allRoom);
+    },[allRoom]);
+
 
     const newdm = async (e) => {
         e.preventDefault()
@@ -125,7 +122,11 @@ const ChatBar = ({socket}) => {
           </Button>
         </Modal.Footer>
       </Modal>
-  </div>
+            <div className='chat__users' style={{height: "20em",overflow: "scroll",overflowX: "hidden",objectFit: "cover"}}>
+                {allRoom.map(room => <p>{room.name}</p>)}
+            </div>
+        </div>
+
   )
 }
 
