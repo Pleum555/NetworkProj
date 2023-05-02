@@ -5,16 +5,15 @@ const {
     getallUndirectedRooms,
     getRoombyid,
     getRoombyname,
-    createundirectedRoom,
+    createUndirectedRoom,
     createdirectedRoom,
     removeRoom 
 } = require('../controllers/room');
 
-// Routes for Rooms
+// Routes for Rooms by http://localhost:3000/api/v1/rooms
 router.get('/', getallUndirectedRooms);
-router.get('/:roomName', getRoombyname);
-router.post('/', createundirectedRoom);
-router.post('/direct', createdirectedRoom);
-router.delete('/:roomName', removeRoom);
+router.post('/', createUndirectedRoom);
+//router.post('/direct', createdirectedRoom);
+router.delete('/', removeRoom);
 
 module.exports = router;
