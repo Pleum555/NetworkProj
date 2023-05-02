@@ -1,7 +1,7 @@
 import { Button, Form, Modal } from 'react-bootstrap'
 import React, {useState, useEffect} from 'react'
 const room_path = "http://localhost:4000/api/v1/rooms"
-const ChatBar = ({socket}) => {
+const ChatBar = ({setMessages,current,setchat,socket}) => {
 
     const [show, setShow] = useState(false);
     const [chatname, setChatname] = useState('');
@@ -12,7 +12,19 @@ const ChatBar = ({socket}) => {
     useEffect(()=> {
         socket.on("newUserResponse", data => setUsers(data))
     }, [socket, users])
-
+    
+    const changeroomHandler = (name) => {
+        // console.log("this is old chat room "+current)
+        // console.log("this is new chat room "+name)
+        socket.emit("joinroom", 
+            {
+            oldchatname: current,
+            chatname: name
+            }
+        )
+        setMessages([]) ;
+        setchat(name) ;
+    }
     const createChatHandler = async (e) => {
         e.preventDefault() ;
         console.log(chatname)
@@ -49,11 +61,11 @@ const ChatBar = ({socket}) => {
                 alert(result.error);
             } else {
                 setAllRoom(result)
-                console.log(result)
+                // console.log(result)
             }
         }
         getRoom();
-        console.log("all rooms: "+allRoom);
+        // console.log("all rooms: "+allRoom);
     },[allRoom]);
 
 
@@ -96,7 +108,8 @@ const ChatBar = ({socket}) => {
         </div>
         <div>
             <h4  className='chat__header'>AVILABLE ROOMS</h4>
-        </div><Modal show={show} onHide={handleClose}>
+        </div>
+        <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -121,10 +134,12 @@ const ChatBar = ({socket}) => {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
-            <div className='chat__users' style={{height: "20em",overflow: "scroll",overflowX: "hidden",objectFit: "cover"}}>
-                {allRoom.map(room => <p>{room.name}</p>)}
-            </div>
+        </Modal>
+        <div className='chat__users' style={{height: "20em",overflow: "scroll",overflowX: "hidden",objectFit: "cover"}}>
+            {allRoom.map(room => (
+                <p onClick={() => changeroomHandler(room.name)}>{room.name}</p>
+            ))}
+        </div>
         </div>
 
   )

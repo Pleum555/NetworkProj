@@ -3,7 +3,7 @@ const Room = require("../models/Room");
 //GET ROOMS
 const getallUndirectedRooms = async(req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const rooms = await Room.find().where({directed: false});
         res.status(200).json(rooms);
     } catch (err) {
