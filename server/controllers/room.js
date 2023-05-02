@@ -5,6 +5,7 @@ const Room = require("../models/Room");
 //GET ROOMS
 const getallUndirectedRooms = async(req, res) => {
     try {
+        console.log(req.body);
         const rooms = await Room.find().where({directed: false});
         res.status(200).json(rooms);
     } catch (err) {
@@ -35,9 +36,11 @@ const getRoombyname = async(req, res) => {
 
 //CREATE ROOM
 const createUndirectedRoom = async(req, res) => {
-    const name = req.body.name;
     try {
-        const newRoom = new Room({name});
+        await console.log(req.params);
+        await console.log(req.body);
+        const {name} = req.body;
+        const newRoom = await Room.create({name});
         const savedRoom = await newRoom.save();
         res.status(201).json(savedRoom);
     } catch (err) {
