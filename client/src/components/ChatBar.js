@@ -6,11 +6,11 @@ const ChatBar = ({socket}) => {
         socket.on("newUserResponse", data => setUsers(data))
     }, [socket, users])
 
-    const newroom = async (e) => {
+    const newchatroom = async (e) => {
         e.preventDefault()
         //console.log('aftersubmit')
         const data = {
-            name: "new"
+            name: "new6"
         };
         
         const response = await fetch(room_path, {
@@ -27,17 +27,7 @@ const ChatBar = ({socket}) => {
             alert(result.error);
         }
         else{
-            // let toServer = formData.name
-            // console.log("toserver: "+ toServer)
-            // localStorage.setItem("name", toServer)
-            // socket.emit("newUser", {toServer, socketID: socket.id})
-            // //localStorage.setItem('user',JSON.stringify(result))
-            // //socket.emit("newUser", {email, socketID: socket.id})
-            // console.log("success emit after login")
-            // alert("Login completed");
-            // //window.location.href="/";
-            // navigate("/")
-            console.log("create room successfully")
+            console.log(result)
         }
     }
 
@@ -70,7 +60,7 @@ const ChatBar = ({socket}) => {
     <div className='chat__sidebar'>
         <h2>Rooms & Users</h2>
         <div>
-        <button className="sendBtn" onClick={newroom} style={{marginTop:"10px"}}>Create Room</button>
+        <button className="sendBtn" onClick={newchatroom} style={{marginTop:"10px"}}>Create Room</button>
         </div>
         <div>
             <h4  className='chat__header'>ACTIVE USERS</h4>
