@@ -13,6 +13,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #C0DBEA;
 }
 .home__container > * {
   margin-bottom: 10px;
@@ -78,6 +79,7 @@
   padding: 10px;
   width: 150px;
   border: none;
+  border-radius: 10px;
   outline: none;
   background-color: #D1512D;
   cursor: pointer;
@@ -119,6 +121,7 @@
   background-color: green;
   padding: 10px;
   border: none;
+  border-radius: 10px;
   outline: none;
   color: #EAE3D2;
   cursor: pointer;

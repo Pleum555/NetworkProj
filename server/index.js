@@ -13,7 +13,7 @@ app.use(cors())
 let users = []
 
 socketIO.on('connection', (socket) => {
-    console.log(`⚡: ${socket.id} user just connected!`)  
+    console.log(`🚀: ${socket.id} user just connected!`)  
     socket.on("message", data => {
       socketIO.emit("messageResponse", data)
     })
