@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 const room_path = "http://localhost:4000/api/v1/rooms"
 const ChatBar = ({socket}) => {
     const [users, setUsers] = useState([])
+    const [allRoom, setAllRoom] = useState([]);
     useEffect(()=> {
         socket.on("newUserResponse", data => setUsers(data))
     }, [socket, users])
@@ -10,7 +11,7 @@ const ChatBar = ({socket}) => {
         e.preventDefault()
         //console.log('aftersubmit')
         const data = {
-            name: "new6"
+            name: "new12"
         };
         
         const response = await fetch(room_path, {
@@ -27,9 +28,29 @@ const ChatBar = ({socket}) => {
             alert(result.error);
         }
         else{
+            window.location.reload()
             console.log(result)
         }
+        
     }
+
+    useEffect(() => {
+        const getRoom =async () =>{
+            const respone = await fetch(room_path, { 
+                method: "GET"
+            });
+            const result = await respone.json();
+            if (!respone.ok) {
+                alert(result.error);
+            } else {
+                setAllRoom(result)
+                console.log(result)
+            }
+        }
+        getRoom();
+        console.log("all rooms: "+allRoom);
+    },[]);
+
 
     const newdm = async (e) => {
         e.preventDefault()
@@ -70,6 +91,9 @@ const ChatBar = ({socket}) => {
         </div>
         <div>
             <h4  className='chat__header'>AVILABLE ROOMS</h4>
+            <div className='chat__users'>
+                {allRoom.map(room => <p>{room.name}</p>)}
+            </div>
         </div>
   </div>
   )
