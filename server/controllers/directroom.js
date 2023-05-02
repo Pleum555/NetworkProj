@@ -9,15 +9,12 @@ const createDirectedRoomandgetId = async(req, res) => {
         let directroomId;
         if(checkRoom1){
             directroomId = checkRoom1.id;
-            console.log(1);
         }else if(checkRoom2){
             directroomId = checkRoom2.id;
-            console.log(2);
         }else{
             const newRoom = await DirectRoom.create({user1, user2});
             const savedRoom = await newRoom.save();
             directroomId = savedRoom.id;
-            console.log(3);
         }
         res.status(201).json(directroomId);
     } catch (err) {
