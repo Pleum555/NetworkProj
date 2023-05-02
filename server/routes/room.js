@@ -10,7 +10,7 @@ const {
     removeRoom 
 } = require('../controllers/room');
 
-// Routes for Rooms by http://localhost:3000/api/v1/rooms
+// Routes for Rooms by http://localhost:4000/api/v1/rooms
 router.get('/', getallUndirectedRooms);
 router.post('/', createUndirectedRoom);
 //router.post('/direct', createdirectedRoom);

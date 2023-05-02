@@ -19,7 +19,7 @@ dotenv.config({path:'./config/config.env'});
 
 //Connect to database
 connectDB();
-
+app.use(express.json());
 app.use(cors())
 
 //Mount routers
