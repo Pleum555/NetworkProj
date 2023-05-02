@@ -1,14 +1,16 @@
 import { Button, Form, Modal } from 'react-bootstrap'
 import React, {useState, useEffect} from 'react'
 const room_path = "http://localhost:4000/api/v1/rooms"
-const ChatBar = ({setMessages,current,setchat,socket}) => {
+const direct_room = "http://localhost:4000/api/v1/directrooms"
 
+const ChatBar = ({setMessages,current,setchat,socket}) => {
     const [show, setShow] = useState(false);
     const [chatname, setChatname] = useState('');
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [users, setUsers] = useState([])
     const [allRoom, setAllRoom] = useState([]);
+    //const [currentChatroom, setCurrentChatroom] = useState("")
     useEffect(()=> {
         socket.on("newUserResponse", data => setUsers(data))
     }, [socket, users])
@@ -25,13 +27,32 @@ const ChatBar = ({setMessages,current,setchat,socket}) => {
         setMessages([]) ;
         setchat(name) ;
     }
+
+    const chatdmHandler = async (name) => {
+
+            const queryParams = `?user1=${name}&user2=${localStorage.getItem("userName")}`;
+            const url = `${direct_room}${queryParams}`;
+            const response = await fetch(url);
+            const result = await response.json()
+            if(!response.ok){
+                console.log(result.error)
+                alert(result.error)
+            }
+            else{
+                console.log("success"+name + " and " + localStorage.getItem("userName"))
+                console.log(result)
+            }
+        }
+        //console.log(name + " and " + localStorage.getItem("userName"))
+    
+
+
     const createChatHandler = async (e) => {
         e.preventDefault() ;
         console.log(chatname)
         const data = {
             name: chatname
         };
-        
         const response = await fetch(room_path, {
             method: 'POST',
             headers: {
@@ -103,7 +124,7 @@ const ChatBar = ({setMessages,current,setchat,socket}) => {
         <div>
             <h4  className='chat__header'>ACTIVE USERS</h4>
             <div className='chat__users'>
-                {users.map(user => <p key={user.socketID}>{user.userName}</p>)}
+                {users.map(user => <p key={user.socketID} onClick={() => chatdmHandler(user.userName)}>{user.userName}</p>)}
             </div>
         </div>
         <div>
