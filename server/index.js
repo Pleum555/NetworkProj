@@ -26,6 +26,7 @@ app.use(cors())
 app.use('/api/v1/rooms', rooms);
 
 let users = []
+let chatrooms = []
 
 socketIO.on('connection', (socket) => {
     console.log(`🚀: ${socket.id} user just connected!`)  
