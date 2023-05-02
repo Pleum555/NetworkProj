@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom"
 
-const ChatBody = ({current,messages, typingStatus, lastMessageRef}) => { 
+const ChatBody = ({chatroomName,messages, typingStatus, lastMessageRef}) => { 
   const navigate = useNavigate()
   
 
@@ -14,7 +14,7 @@ const ChatBody = ({current,messages, typingStatus, lastMessageRef}) => {
   return (
     <>
       <header className='chat__mainHeader'>
-          <p>{current}</p>
+          <p>{chatroomName}</p>
           <button className='leaveChat__btn' onClick={handleLeaveChat}>LEAVE CHAT</button>
         </header>
 

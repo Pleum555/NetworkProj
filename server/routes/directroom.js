@@ -7,6 +7,6 @@ const {
 } = require('../controllers/directroom');
 
 // Routes for Rooms by http://localhost:4000/api/v1/directrooms
-router.get('/', createDirectedRoomandgetId);
+router.post('/', createDirectedRoomandgetId);
 
 module.exports = router;

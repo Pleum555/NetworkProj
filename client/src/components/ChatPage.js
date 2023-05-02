@@ -5,6 +5,7 @@ import ChatFooter from './ChatFooter'
 
 const ChatPage = ({socket}) => { 
   const [messages, setMessages] = useState([])
+  const [chatroomName, setchatroomName] = useState("")
   const [currentChatroom, setCurrentChatroom] = useState("")
   const [typingStatus, setTypingStatus] = useState("")
   const lastMessageRef = useRef(null);
@@ -24,10 +25,10 @@ const ChatPage = ({socket}) => {
 
   return (
     <div className="chat">
-      <ChatBar setMessages={setMessages} current={currentChatroom} setchat={setCurrentChatroom} socket={socket}/>
+      <ChatBar setchatroomName={setchatroomName} setMessages={setMessages} current={currentChatroom} setchat={setCurrentChatroom} socket={socket}/>
       <div className='chat__main'>
-        <ChatBody current={currentChatroom} messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef}/>
-        <ChatFooter current={currentChatroom} socket={socket}/>
+        <ChatBody chatroomName={chatroomName} current={currentChatroom} messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef}/>
+        <ChatFooter  current={currentChatroom} socket={socket}/>
       </div>
     </div>
   )

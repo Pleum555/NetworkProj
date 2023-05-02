@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 const room_path = "http://localhost:4000/api/v1/rooms"
 const direct_room = "http://localhost:4000/api/v1/directrooms"
 
-const ChatBar = ({setMessages,current,setchat,socket}) => {
+const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
     const [show, setShow] = useState(false);
     const [chatname, setChatname] = useState('');
     const handleClose = () => setShow(false);
@@ -26,22 +26,61 @@ const ChatBar = ({setMessages,current,setchat,socket}) => {
         )
         setMessages([]) ;
         setchat(name) ;
+        setchatroomName(name) ;
     }
 
     const chatdmHandler = async (name) => {
-
-            const queryParams = `?user1=${name}&user2=${localStorage.getItem("userName")}`;
-            const url = `${direct_room}${queryParams}`;
-            const response = await fetch(url);
-            const result = await response.json()
-            if(!response.ok){
-                console.log(result.error)
-                alert(result.error)
-            }
-            else{
-                console.log("success"+name + " and " + localStorage.getItem("userName"))
-                console.log(result)
-            }
+        const data = {
+            user1: name,
+            user2: localStorage.getItem("userName")
+       }
+        const response = await fetch(direct_room, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+    
+        const result = await response.json()
+        if(!response.ok){
+            console.log(result.error);
+            alert(result.error);
+        }
+        else{
+            console.log(result)
+                socket.emit("joinroom", 
+                {
+                    oldchatname: current,
+                    chatname: result
+                }
+                )
+                setMessages([]) ;
+                setchatroomName(name) ;
+                setchat(result) ;
+            
+        }
+            // const queryParams = `?user1=${name}&user2=${localStorage.getItem("userName")}`;
+            // const url = `${direct_room}${queryParams}`;
+            // const response = await fetch(url);
+            // const result = await response.json()
+            // if(!response.ok){
+            //     console.log(result.error)
+            //     alert(result.error)
+            // }
+            // else{
+            //     console.log("success"+name + " and " + localStorage.getItem("userName"))
+            //     console.log(result)
+            //     socket.emit("joinroom", 
+            //     {
+            //         oldchatname: current,
+            //         chatname: result
+            //     }
+            //     )
+            //     setMessages([]) ;
+            //     setchatroomName(name) ;
+            //     setchat(result) ;
+            // }
         }
         //console.log(name + " and " + localStorage.getItem("userName"))
     
