@@ -157,7 +157,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("typing", data => (
-      socket.broadcast.to(data.chatname).emit("typingResponse", data)
+      socket.broadcast.emit("typingResponse", data)
     ))
 
     socket.on("newUser", data => {
