@@ -143,7 +143,7 @@ io.on('connection', (socket) => {
     // Send message to all users currently in the room, apart from the user that just joined
     io.to(data.chatname).emit('messageResponse', {
       chatname: data.chatname,
-      text: "someone has joined the chat room", 
+      text: `${data.myname} has joined the chat room`, 
       name: "chatbot", 
       id: `${socket.id}${Math.random()}`,
       socketID: socket.id
@@ -156,7 +156,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("typing", data => (
-      socket.broadcast.emit("typingResponse", data)
+      socket.broadcast.to(data.chatname).emit("typingResponse", data)
     ))
 
     socket.on("newUser", data => {

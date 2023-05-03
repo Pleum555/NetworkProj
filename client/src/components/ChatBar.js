@@ -51,6 +51,7 @@ const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
             console.log(result)
                 socket.emit("joinroom", 
                 {
+                    myname: localStorage.getItem("userName"),
                     oldchatname: current,
                     chatname: result
                 }
