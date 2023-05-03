@@ -4,7 +4,6 @@ import ChatPage from "./components/ChatPage";
 import socketIO from "socket.io-client"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 const socket = socketIO.connect("172.20.10.3:4000")
 function App() {
   return (
