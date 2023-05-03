@@ -101,13 +101,16 @@ const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
             if (!respone.ok) {
                 alert(result.error);
                 // console.log("result")
+                // console.log("result")
             } else {
                 setAllRoom(result)
+                // console.log("result: "+result)
                 // console.log("result: "+result)
             }
         }
         getRoom();
         // console.log("all rooms: "+allRoom);
+        //console.log("result")
         //console.log("result")
     },[allRoom]);
 
