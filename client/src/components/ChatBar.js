@@ -1,7 +1,7 @@
 import { Button, Form, Modal } from 'react-bootstrap'
 import React, {useState, useEffect} from 'react'
-const room_path = "http://localhost:4000/api/v1/rooms"
-const direct_room = "http://localhost:4000/api/v1/directrooms"
+const room_path = "http://172.20.10.3:4000/api/v1/rooms"
+const direct_room = "http://172.20.10.3:4000/api/v1/directrooms"
 
 const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
     const [show, setShow] = useState(false);
@@ -58,29 +58,7 @@ const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
                 setMessages([]) ;
                 setchatroomName(name) ;
                 setchat(result) ;
-            
         }
-            // const queryParams = `?user1=${name}&user2=${localStorage.getItem("userName")}`;
-            // const url = `${direct_room}${queryParams}`;
-            // const response = await fetch(url);
-            // const result = await response.json()
-            // if(!response.ok){
-            //     console.log(result.error)
-            //     alert(result.error)
-            // }
-            // else{
-            //     console.log("success"+name + " and " + localStorage.getItem("userName"))
-            //     console.log(result)
-            //     socket.emit("joinroom", 
-            //     {
-            //         oldchatname: current,
-            //         chatname: result
-            //     }
-            //     )
-            //     setMessages([]) ;
-            //     setchatroomName(name) ;
-            //     setchat(result) ;
-            // }
         }
         //console.log(name + " and " + localStorage.getItem("userName"))
     
@@ -116,16 +94,21 @@ const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
             const respone = await fetch(room_path, { 
                 method: "GET"
             });
-            const result = await respone.json();
+            
+            const result = await (await respone).json();
+            // console.log(result)
+            //console.log("ok")
             if (!respone.ok) {
                 alert(result.error);
+                // console.log("result")
             } else {
                 setAllRoom(result)
-                // console.log(result)
+                // console.log("result: "+result)
             }
         }
         getRoom();
         // console.log("all rooms: "+allRoom);
+        //console.log("result")
     },[allRoom]);
 
 
@@ -201,7 +184,7 @@ const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
             ))}
         </div>
         </div>
-
+        //<p key={user.socketID} onClick={() => chatdmHandler(user.userName)}>{user.userName}</p>)}
   )
 }
 
