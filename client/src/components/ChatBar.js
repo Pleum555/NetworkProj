@@ -6,6 +6,7 @@ const direct_room = "http://172.20.10.3:4000/api/v1/directrooms"
 const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
     const [show, setShow] = useState(false);
     const [chatname, setChatname] = useState('');
+    const [myname, setmyname] = useState('');
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [users, setUsers] = useState([])
@@ -18,8 +19,10 @@ const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
     const changeroomHandler = (name) => {
         // console.log("this is old chat room "+current)
         // console.log("this is new chat room "+name)
+        setmyname(localStorage.getItem("userName"))
         socket.emit("joinroom", 
             {
+            myname:myname,
             oldchatname: current,
             chatname: name
             }
@@ -51,7 +54,7 @@ const ChatBar = ({setchatroomName,setMessages,current,setchat,socket}) => {
             console.log(result)
                 socket.emit("joinroom", 
                 {
-                    myname: localStorage.getItem("userName"),
+                    myname: "ohm",
                     oldchatname: current,
                     chatname: result
                 }

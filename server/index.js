@@ -140,7 +140,8 @@ io.on('connection', (socket) => {
       socket.leave(data.oldchatname)
       socket.join(data.chatname)
       // Add this
-    // Send message to all users currently in the room, apart from the user that just joined
+      
+      // Send message to all users currently in the room, apart from the user that just joined
     io.to(data.chatname).emit('messageResponse', {
       chatname: data.chatname,
       text: `${data.myname} has joined the chat room`, 
